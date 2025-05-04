@@ -6,7 +6,7 @@ class NotesItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: EdgeInsets.only(bottom: 8),
       padding: EdgeInsets.only(
         top: 24,
         bottom: 24,
@@ -33,7 +33,7 @@ class NotesItem extends StatelessWidget {
                   'Build you career with code build you career',
                 style: TextStyle(
                     color: Colors.black.withAlpha(400),
-                  fontSize: 18
+                  fontSize: 17
                 ),
               ),
             ),
