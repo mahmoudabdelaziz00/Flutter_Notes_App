@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_app/models/note_model.dart';
 
 import 'custom_button.dart';
 import 'custom_text_field.dart';
@@ -15,7 +18,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
-  String? title, subtitle;
+  String? title, subTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +29,34 @@ class _AddNoteFormState extends State<AddNoteForm> {
         children: [
           SizedBox(height: 32),
           CustomTextFormField(
-              onSaved: (value){
-                title = value;
-              },
-              hint: 'Title'),
+            onSaved: (value) {
+              title = value;
+            },
+            hint: 'Title',
+          ),
           SizedBox(height: 20),
           CustomTextFormField(
-              onSaved: (value){
-                subtitle = value;
-              },
-              hint: 'Content', maxLines: 5),
+            onSaved: (value) {
+              subTitle = value;
+            },
+            hint: 'Content',
+            maxLines: 5,
+          ),
           SizedBox(height: 50),
           CustomButton(
-            onTap: (){
-              if(formKey.currentState!.validate()){
+            onTap: () {
+              if (formKey.currentState!.validate()) {
                 formKey.currentState!.save();
-              }else{
-                autoValidateMode =AutovalidateMode.always ;
-                setState(() {
-
-                });
+                var noteModel = NoteModel(
+                  title: title!,
+                  subTitle: subTitle!,
+                  date: DateTime.now().toString(),
+                  color: Colors.blue.value,
+                );
+                BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
+              } else {
+                autoValidateMode = AutovalidateMode.always;
+                setState(() {});
               }
             },
           ),
